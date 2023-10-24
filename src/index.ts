@@ -37,6 +37,7 @@ export const generate = async (options: GeneratorOptions) => {
     entitySuffix = '',
     fileNamingStyle = 'camel',
     outputType = 'class',
+    customPrismaImportPath,
   } = options.generator.config;
 
   const exportRelationModifierClasses = stringToBoolean(
@@ -142,6 +143,11 @@ export const generate = async (options: GeneratorOptions) => {
     if (!prismaClientImportPath.startsWith('.')) {
       prismaClientImportPath = './' + prismaClientImportPath;
     }
+  }
+
+  if (customPrismaImportPath) {
+    console.log('overwriting import path..');
+    prismaClientImportPath = customPrismaImportPath;
   }
 
   const results = run({
