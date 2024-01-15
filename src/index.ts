@@ -242,7 +242,8 @@ export const generate = async (options: GeneratorOptions) => {
       .map(async ({ fileName, content }) => {
         await makeDir(path.dirname(fileName));
 
-        if (applyPrettier) content = prettier.format(content, prettierConfig);
+        if (applyPrettier)
+          content = await prettier.format(content, prettierConfig);
 
         return fs.writeFile(fileName, content);
       }),

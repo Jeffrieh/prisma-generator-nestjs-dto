@@ -74,6 +74,11 @@ export const computeUpdateDtoParams = ({
     };
     const decorators: IDecorators = {};
 
+    imports.push({
+      from: 'class-transformer',
+      destruct: ['Exclude', 'Expose', 'Type'],
+    });
+
     if (
       isAnnotatedWith(field, DTO_RELATION_INCLUDE_ID) &&
       relationScalarFieldNames.includes(name)
@@ -82,6 +87,7 @@ export const computeUpdateDtoParams = ({
 
     if (isReadOnly(field)) return result;
     if (isAnnotatedWith(field, DTO_UPDATE_HIDDEN)) return result;
+
     if (isRelation(field)) {
       if (!isAnnotatedWithOneOf(field, DTO_RELATION_MODIFIERS_ON_UPDATE)) {
         return result;

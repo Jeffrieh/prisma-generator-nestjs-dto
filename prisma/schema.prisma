@@ -1,168 +1,168 @@
-datasource db {
-  provider = "postgresql"
-  url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
-}
+// datasource db {
+//   provider = "postgresql"
+//   url      = "postgresql://johndoe:mypassword@localhost:5432/mydb?schema=public"
+// }
 
-generator client {
-  provider = "prisma-client-js"
-}
+// generator client {
+//   provider = "prisma-client-js"
+// }
 
-generator nestjsDto {
-  provider                        = "node -r ts-node/register/transpile-only src/cli.ts"
-  output                          = "../src/@generated/prisma-generator-nestjs-dto"
-  outputToNestJsResourceStructure = "true"
-  flatResourceStructure           = "true"
-  exportRelationModifierClasses   = "true"
-  reExport                        = "true"
-  createDtoPrefix                 = "Create"
-  updateDtoPrefix                 = "Update"
-  dtoSuffix                       = "Dto"
-  entityPrefix                    = ""
-  entitySuffix                    = "Entity"
-  fileNamingStyle                 = "camel"
-  classValidation                 = "true"
-  noDependencies                  = "false"
-  outputType                      = "class"
-  definiteAssignmentAssertion     = "true"
-  prettier                        = "true"
-}
+// generator nestjsDto {
+//   provider                        = "node -r ts-node/register/transpile-only src/cli.ts"
+//   output                          = "../src/@generated/prisma-generator-nestjs-dto"
+//   outputToNestJsResourceStructure = "true"
+//   flatResourceStructure           = "true"
+//   exportRelationModifierClasses   = "true"
+//   reExport                        = "true"
+//   createDtoPrefix                 = "Create"
+//   updateDtoPrefix                 = "Update"
+//   dtoSuffix                       = "Dto"
+//   entityPrefix                    = ""
+//   entitySuffix                    = "Entity"
+//   fileNamingStyle                 = "camel"
+//   classValidation                 = "true"
+//   noDependencies                  = "false"
+//   outputType                      = "class"
+//   definiteAssignmentAssertion     = "true"
+//   prettier                        = "true"
+// }
 
-model Product {
-  /// @description Product ID
-  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  /// @Contains('Product')
-  /// @description Project's name
-  /// @example My first product
-  name            String        @db.VarChar(255)
-  description     String        @db.VarChar(1024)
-  /// @maxItems 5
-  images          Json[]        @db.Json
-  highlighted     Boolean       @default(false)
-  /// @DtoCreateOptional
-  /// @description Number of reviews
-  /// @minimum 9
-  /// @example 12
-  reviewCount     Int           @default(0)
-  type            ProductType[]
-  /// @ArrayNotEmpty
-  /// @MinLength(3)
-  tags            String[]
-  /// @DtoCastType(MyType, my-package)
-  attributes      Json?
-  /// @DtoCastType(SomeType, ../types, CustomType)
-  someAttributes  Json
-  /// @DtoCastType(OtherType, other-package, default)
-  otherAttributes Json
-  /// @DtoCastType(OtherType, other-package, default)
-  finalAttributes Json?
-  /// @DtoUpdateHidden
-  score           Float?
-  /// @DtoCreateHidden
-  lastOrder       DateTime?
-  /// @DtoCreateOptional
-  /// @DtoUpdateOptional
-  note            String        @default("")
-  /// @DtoRelationIncludeId
-  categoryId      String        @db.Uuid
-  companyId       String        @db.Uuid
+// model Product {
+//   /// @description Product ID
+//   id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   /// @Contains('Product')
+//   /// @description Project's name
+//   /// @example My first product
+//   name            String        @db.VarChar(255)
+//   description     String        @db.VarChar(1024)
+//   /// @maxItems 5
+//   images          Json[]        @db.Json
+//   highlighted     Boolean       @default(false)
+//   /// @DtoCreateOptional
+//   /// @description Number of reviews
+//   /// @minimum 9
+//   /// @example 12
+//   reviewCount     Int           @default(0)
+//   type            ProductType[]
+//   /// @ArrayNotEmpty
+//   /// @MinLength(3)
+//   tags            String[]
+//   /// @DtoCastType(MyType, my-package)
+//   attributes      Json?
+//   /// @DtoCastType(SomeType, ../types, CustomType)
+//   someAttributes  Json
+//   /// @DtoCastType(OtherType, other-package, default)
+//   otherAttributes Json
+//   /// @DtoCastType(OtherType, other-package, default)
+//   finalAttributes Json?
+//   /// @DtoUpdateHidden
+//   score           Float?
+//   /// @DtoCreateHidden
+//   lastOrder       DateTime?
+//   /// @DtoCreateOptional
+//   /// @DtoUpdateOptional
+//   note            String        @default("")
+//   /// @DtoRelationIncludeId
+//   categoryId      String        @db.Uuid
+//   companyId       String        @db.Uuid
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanCreateOnCreate
-  category Category @relation(fields: [categoryId], references: [id])
+//   /// @DtoRelationRequired
+//   /// @DtoRelationCanCreateOnCreate
+//   category Category @relation(fields: [categoryId], references: [id])
 
-  /// @DtoRelationRequired
-  /// @DtoRelationCanConnectOnCreate
-  /// @DtoRelationCanCreateOnCreate
-  /// @DtoRelationCanConnectOnUpdate
-  /// @DtoRelationCanCreateOnUpdate
-  company Company @relation(fields: [companyId], references: [id])
+//   /// @DtoRelationRequired
+//   /// @DtoRelationCanConnectOnCreate
+//   /// @DtoRelationCanCreateOnCreate
+//   /// @DtoRelationCanConnectOnUpdate
+//   /// @DtoRelationCanCreateOnUpdate
+//   company Company @relation(fields: [companyId], references: [id])
 
-  /// @DtoRelationIncludeId
-  photoId String?
-  /// @DtoRelationCanDisconnectOnUpdate
-  photo   Photo?  @relation(fields: [photoId], references: [id])
+//   /// @DtoRelationIncludeId
+//   photoId String?
+//   /// @DtoRelationCanDisconnectOnUpdate
+//   photo   Photo?  @relation(fields: [photoId], references: [id])
 
-  /// @DtoEntityHidden
-  /// @DtoCreateOptional
-  /// @DtoUpdateOptional
-  createdAt DateTime @default(now()) @db.Timestamptz(6)
+//   /// @DtoEntityHidden
+//   /// @DtoCreateOptional
+//   /// @DtoUpdateOptional
+//   createdAt DateTime @default(now()) @db.Timestamptz(6)
 
-  /// @DtoEntityHidden
-  /// @DtoCreateOptional
-  /// @DtoUpdateOptional
-  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+//   /// @DtoEntityHidden
+//   /// @DtoCreateOptional
+//   /// @DtoUpdateOptional
+//   updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-  bikeId String?
-  /// @DtoRelationCanConnectOnCreate
-  bike   Bike?   @relation(fields: [bikeId], references: [id])
+//   bikeId String?
+//   /// @DtoRelationCanConnectOnCreate
+//   bike   Bike?   @relation(fields: [bikeId], references: [id])
 
-  @@map("products")
-}
+//   @@map("products")
+// }
 
-model Category {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      String
-  updatedAt DateTime  @updatedAt
-  /// @DtoRelationCanCreateOnCreate
-  /// @DtoRelationCanConnectOnUpdate
-  product   Product[]
-}
+// model Category {
+//   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   name      String
+//   updatedAt DateTime  @updatedAt
+//   /// @DtoRelationCanCreateOnCreate
+//   /// @DtoRelationCanConnectOnUpdate
+//   product   Product[]
+// }
 
-model Company {
-  id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  /// @DtoRelationCanDisconnectOnUpdate
-  product Product[]
+// model Company {
+//   id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   /// @DtoRelationCanDisconnectOnUpdate
+//   product Product[]
 
-  companyUserRoles CompanyUserRole[]
-}
+//   companyUserRoles CompanyUserRole[]
+// }
 
-model Photo {
-  id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  product Product[]
-}
+// model Photo {
+//   id      String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   product Product[]
+// }
 
-enum ProductType {
-  digital
-  analogue
-}
+// enum ProductType {
+//   digital
+//   analogue
+// }
 
-model User {
-  id   String @id
-  name String
+// model User {
+//   id   String @id
+//   name String
 
-  companyUserRoles CompanyUserRole[]
-}
+//   companyUserRoles CompanyUserRole[]
+// }
 
-model Role {
-  id        String @id
-  name      Json
-  attribute String
+// model Role {
+//   id        String @id
+//   name      Json
+//   attribute String
 
-  companyUserRoles CompanyUserRole[]
+//   companyUserRoles CompanyUserRole[]
 
-  @@unique([name, attribute])
-}
+//   @@unique([name, attribute])
+// }
 
-model CompanyUserRole {
-  companyId String
-  company   Company @relation(fields: [companyId], references: [id])
-  userId    String
-  user      User    @relation(fields: [userId], references: [id])
-  roleId    String
-  role      Role    @relation(fields: [roleId], references: [id])
+// model CompanyUserRole {
+//   companyId String
+//   company   Company @relation(fields: [companyId], references: [id])
+//   userId    String
+//   user      User    @relation(fields: [userId], references: [id])
+//   roleId    String
+//   role      Role    @relation(fields: [roleId], references: [id])
 
-  @@id([companyId, userId, roleId])
-}
+//   @@id([companyId, userId, roleId])
+// }
 
-model Bike {
-  id             String    @id @default(uuid())
-  chassis_number String
-  model          String
-  /// @DtoApiHidden
-  vendor         String
-  year_from      Int
-  year_to        Int
-  products       Product[]
+// model Bike {
+//   id             String    @id @default(uuid())
+//   chassis_number String
+//   model          String
+//   /// @DtoApiHidden
+//   vendor         String
+//   year_from      Int
+//   year_to        Int
+//   products       Product[]
 
-  @@unique([vendor, chassis_number], map: "My_Bike_Unique")
-}
+//   @@unique([vendor, chassis_number], map: "My_Bike_Unique")
+// }

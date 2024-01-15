@@ -1,8 +1,10 @@
-import path from 'node:path';
+import path, { parse } from 'node:path';
 import slash from 'slash';
 import {
   DTO_API_HIDDEN,
   DTO_ENTITY_HIDDEN,
+  DTO_EXCLUDE,
+  DTO_EXPOSE,
   DTO_RELATION_REQUIRED,
 } from '../annotations';
 import {
@@ -57,7 +59,14 @@ export const computeEntityParams = ({
     };
     const decorators: IDecorators = {};
 
+    field.isExposed = true;
+
     if (isAnnotatedWith(field, DTO_ENTITY_HIDDEN)) return result;
+
+    imports.push({
+      from: 'class-transformer',
+      destruct: ['Exclude', 'Expose', 'Type'],
+    });
 
     if (isType(field)) {
       // don't try to import the class we're preparing params for

@@ -12,6 +12,7 @@ export interface ParsedField {
   name: string;
   type: string;
   documentation?: string;
+  isExposed?: boolean;
   isRequired: boolean;
   isList: boolean;
   /**
@@ -119,5 +120,6 @@ export interface IClassValidator {
 export interface IDecorators {
   apiProperties?: IApiProperty[];
   apiHideProperty?: boolean;
+  exposeProperty?: boolean;
   classValidators?: IClassValidator[];
 }

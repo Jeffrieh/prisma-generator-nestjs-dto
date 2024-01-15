@@ -36,6 +36,11 @@ export const computeConnectDtoParams = ({
   const extraClasses: string[] = [];
   const classValidators: IClassValidator[] = [];
 
+  imports.push({
+    from: 'class-transformer',
+    destruct: ['Exclude', 'Expose', 'Type'],
+  });
+
   const idFields = model.fields.filter((field) => isId(field));
   const isUniqueFields = model.fields.filter((field) => isUnique(field));
 

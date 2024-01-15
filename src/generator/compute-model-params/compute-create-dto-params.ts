@@ -4,6 +4,8 @@ import {
   DTO_API_HIDDEN,
   DTO_CREATE_HIDDEN,
   DTO_CREATE_OPTIONAL,
+  DTO_EXCLUDE,
+  DTO_EXPOSE,
   DTO_RELATION_CAN_CONNECT_ON_CREATE,
   DTO_RELATION_CAN_CREATE_ON_CREATE,
   DTO_RELATION_CAN_DISCONNECT_ON_UPDATE,
@@ -79,6 +81,12 @@ export const computeCreateDtoParams = ({
 
     if (isReadOnly(field)) return result;
     if (isAnnotatedWith(field, DTO_CREATE_HIDDEN)) return result;
+
+    imports.push({
+      from: 'class-transformer',
+      destruct: ['Exclude', 'Expose'],
+    });
+
     if (isRelation(field)) {
       if (!isAnnotatedWithOneOf(field, DTO_RELATION_MODIFIERS_ON_CREATE)) {
         return result;

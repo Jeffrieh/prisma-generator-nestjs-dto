@@ -168,14 +168,14 @@ export function parseApiProperty(
  */
 export function decorateApiProperty(field: ParsedField): string {
   if (field.apiHideProperty) {
-    return '@ApiHideProperty()\n';
+    return '@ApiHideProperty()\n@Exclude()\n';
   }
 
   if (
     field.apiProperties?.length === 1 &&
     field.apiProperties[0].name === 'dummy'
   ) {
-    return '@ApiProperty()\n';
+    return '@ApiProperty()\n@Expose()\n';
   }
 
   let decorator = '';
@@ -191,6 +191,15 @@ export function decorateApiProperty(field: ParsedField): string {
       },\n`;
     });
     decorator += '})\n';
+  }
+
+  if (field.isExposed) {
+    decorator += '@Expose()\n';
+    if (field.relationName) {
+      decorator += `@Type(${
+        field.apiProperties!.find((t) => t.name == 'type')!.value
+      })\n`;
+    }
   }
 
   return decorator;

@@ -1,19 +1,8 @@
 {
-  "name": "@brakebein/prisma-generator-nestjs-dto",
+  "name": "@jeffrieh/prisma-generator-nestjs-dto",
   "description": "Generates DTO and Entity classes from Prisma Schema for NestJS",
-  "version": "1.19.0",
+  "version": "1.19.1",
   "license": "Apache-2.0",
-  "author": {
-    "name": "Benjamin Kroeger",
-    "email": "bk@vegardit.com",
-    "url": "https://vegardit.com/"
-  },
-  "contributors": [
-    {
-      "name": "Brakebein",
-      "url": "https://github.com/Brakebein"
-    }
-  ],
   "main": "dist/index.js",
   "keywords": [
     "prisma",
@@ -39,12 +28,8 @@
     "generate:mongo": "npx prisma generate --schema ./prisma/mongodb.prisma && npm run format -- --loglevel error",
     "prepare": "npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Brakebein/prisma-generator-nestjs-dto"
-  },
   "bin": {
-    "prisma-generator-nestjs-dto": "dist/cli.js"
+    "dto-generator": "dist/cli.js"
   },
   "engines": {
     "node": ">=14"
@@ -58,10 +43,12 @@
   "dependencies": {
     "@prisma/client": "^4.16.2",
     "@prisma/generator-helper": "^4.16.2",
+    "@types/prettier": "^3.0.0",
     "case": "^1.6.3",
     "chalk": "^4.1.2",
+    "class-transformer": "0.5.1",
     "make-dir": "^3.1.0",
-    "prettier": "^2.8.0",
+    "prettier": "^3.2.2",
     "prisma": "^4.16.2",
     "slash": "^3.0.0",
     "tar": "^6.1.12",

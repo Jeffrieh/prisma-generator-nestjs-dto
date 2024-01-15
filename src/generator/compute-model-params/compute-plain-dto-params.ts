@@ -52,7 +52,14 @@ export const computePlainDtoParams = ({
     };
     const decorators: IDecorators = {};
 
+    field.isExposed = true;
+
     if (isAnnotatedWith(field, DTO_ENTITY_HIDDEN)) return result;
+
+    imports.push({
+      from: 'class-transformer',
+      destruct: ['Exclude', 'Expose', 'Type'],
+    });
 
     if (isRelation(field)) return result;
     if (
